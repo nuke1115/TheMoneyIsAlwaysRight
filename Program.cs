@@ -19,9 +19,9 @@ namespace MainProgram
 		}
 
 
-		private void Start()
+		private void Start()//main loop
 		{
-			//main loop
+			
 
 			while (_running)
 			{
