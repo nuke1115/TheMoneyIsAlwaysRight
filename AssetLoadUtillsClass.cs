@@ -1,7 +1,11 @@
 ﻿using System.Runtime.InteropServices;
 using Excel = Microsoft.Office.Interop.Excel;
+using Newtonsoft.Json;
+using static System.Net.Mime.MediaTypeNames;
+using System.IO;
+using AboutPlayer;
 
-namespace AboutAssetLoadUtills
+namespace AboutAssetUtills
 {
 	/// <summary>
 	/// an excel loader class <br/>
@@ -160,9 +164,30 @@ namespace AboutAssetLoadUtills
 
 
 
-	public class jsonFileLoadManager
+	public class jsonFileManager
 	{
 		//todo
+
+		public Player readJson(string path)
+		{
+			Player returnClass;
+			using (StreamReader file = File.OpenText(path))
+			{
+				JsonSerializer serializer = new JsonSerializer();
+				returnClass = (Player)serializer.Deserialize(file, typeof(Player));
+			}
+			return returnClass;
+		}
+
+		public void WriteJson(string path , IPlayerTag player)
+		{
+			using (StreamWriter file = File.CreateText(path))
+			{
+				JsonSerializer serializer = new JsonSerializer();
+				serializer.Serialize(file, player);
+			}
+		}
+
 	}
 
 
