@@ -18,7 +18,7 @@ namespace AboutExecuteManager
 			
 		}
 
-		[Obsolete]
+		[Obsolete("Not use anymore",true)]
 		public void InitializeWithInject(IPlayerTag player , ITerminateProgram program, string path)
 		{
 			_terminateProgram = program;
@@ -61,31 +61,40 @@ namespace AboutExecuteManager
             else if (commands[0] == _commandConditions[1])
             {
 				Console.WriteLine("this is test 1"); //test
+				_nowStage++;
             }
 			else if (commands[0] == _commandConditions[2])
 			{
 				Console.WriteLine("this is test 2"); //test
+				_nowStage++;
 			}
 			else if (commands[0] == _commandConditions[3])
 			{
 				Console.WriteLine("this is test 3"); //test
+				_nowStage++;
+			}//end of options
+			else
+			{
+				isExecutedSuccessfully = false;
 			}
+
+			//stage change logics
 
 			return isExecutedSuccessfully;
 		}
 
-		private void ReturnStageInstance()
+		private void ReturnStageInstance(int nowStage)
 		{
-
+			if (CheckIsStageChanged(nowStage))
+			{
+				//return stage instance logics
+				_player.SaveNowStage(nowStage);
+			}
 		}
 
-		private bool CheckIsStageChanged()
+		private bool CheckIsStageChanged(int nowStage)
 		{
-			bool isChanged = false;
-
-			//logics 
-
-			return isChanged;
+			return nowStage == _player.GetNowStage();
 		}
 	}
 }

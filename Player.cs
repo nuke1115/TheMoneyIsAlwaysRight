@@ -17,6 +17,9 @@
 		}
 
 		
+		//option logics
+
+
 		public Player()
 		{
 

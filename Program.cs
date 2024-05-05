@@ -32,20 +32,31 @@ namespace MainProgram
 			while (_running)
 			{
 				_commandArgs = GetCommandInput();
-				ExecuteLogics(_commandArgs);
+				_isExecutedSuccessfully = ExecuteLogics(_commandArgs);
+				if (!_isExecutedSuccessfully)
+				{
+					continue;
+				}
 				PrintResult();
+				EndOfLoop();
 			}
 
 		}
 
-		private void PrintResult()
+		private void EndOfLoop(/*to be added*/)
 		{
-
+			//save logics
 		}
 
-		private void ExecuteLogics(string[] commandArgs)
+		private void PrintResult()
+		{
+			Console.WriteLine("실행결과");//test
+		}
+
+		private bool ExecuteLogics(string[] commandArgs)
 		{
 			_isExecutedSuccessfully = _executeManager.ExecuteLogics(commandArgs);
+			return _isExecutedSuccessfully;
 		}
 
 		private string[] GetCommandInput()

@@ -1,5 +1,4 @@
-﻿using AboutPlayer;
-using Excel = Microsoft.Office.Interop.Excel;
+﻿using Excel = Microsoft.Office.Interop.Excel;
 
 public interface ITerminateProgram
 {
