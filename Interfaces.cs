@@ -8,17 +8,13 @@ public interface ITerminateProgram
 
 public interface IPlayerTag
 {
-	//empty
+	public int GetNowStage();
+	public void SaveNowStage(int nowStage);
 }
 
 public interface IInitialize
 {
-	public void Initialize();
-}
-
-public interface IInitializeWithInject
-{
-	public void InitializeWithInject(Player player);
+	public void Initialize(params object[] parameters);
 }
 
 public interface IExecuteLogics

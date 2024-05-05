@@ -2,14 +2,15 @@
 using AboutPlayer;
 using MainProgram;
 using System.IO;
+using System.Numerics;
 
 namespace AboutExecuteManager
 {
-	public class ExecuteManager : IExecuteLogics
+	public class ExecuteManager : IExecuteLogics , IInitialize
 	{
 		private List<string> _commandConditions;
-		private Player _player; // to be changed to interface
-		ITerminateProgram _terminateProgram;
+		private IPlayerTag _player; // to be changed to interface
+		private ITerminateProgram _terminateProgram;
 		private int _nowStage;
 
 		public ExecuteManager()
@@ -17,11 +18,12 @@ namespace AboutExecuteManager
 			
 		}
 
-		public void InitializeWithInject(Player player , ITerminateProgram program, string path)
+		[Obsolete]
+		public void InitializeWithInject(IPlayerTag player , ITerminateProgram program, string path)
 		{
 			_terminateProgram = program;
 			_player = player;
-			_nowStage = _player.nowStage;
+			_nowStage = _player.GetNowStage();
 
 			path = Path.Combine(path, "Assets\\CommandConditions.xlsx");
 			using (excelFileLoadManager excelFileLoader = new excelFileLoadManager(path, 1))
@@ -30,6 +32,21 @@ namespace AboutExecuteManager
 			}
 		}
 		
+
+		public void Initialize(params object[] parameters)
+		{
+			_player = (IPlayerTag)parameters[0];
+			_terminateProgram = (ITerminateProgram)parameters[1];
+			_nowStage = _player.GetNowStage();
+			string path = (string)parameters[2];
+
+			path = Path.Combine(path, "Assets\\CommandConditions.xlsx");
+			using (excelFileLoadManager excelFileLoader = new excelFileLoadManager(path, 1))
+			{
+				_commandConditions = excelFileLoader.LoadExcelFile(1);
+			}
+		}
+
 
 
 		public bool ExecuteLogics(string[] commands)

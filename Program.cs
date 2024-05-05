@@ -59,15 +59,9 @@ namespace MainProgram
 
 		private void Initialize(ITerminateProgram terminateProgram)
 		{
-			InitializeManager initializeManager = new InitializeManager();
-			ExecuteManager executeManager = new ExecuteManager();
-			CommandManager commandManager = new CommandManager();
+			string path = AppDomain.CurrentDomain.BaseDirectory.Substring(0, AppDomain.CurrentDomain.BaseDirectory.LastIndexOf("\\TheMoneyIsAlwaysRight\\") + "\\TheMoneyIsAlwaysRight\\".Length);
 
-			_getCommandInput = commandManager;
-			_getCommandInput = commandManager;
-			_executeManager = executeManager;
-
-			initializeManager.Initialize(executeManager, commandManager , terminateProgram);
+			InitializeManager.Initialize(out _executeManager ,out _getCommandInput ,terminateProgram , path);
 
 			
 		}

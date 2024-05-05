@@ -3,7 +3,7 @@ using AboutPrintManager;
 
 namespace AboutCommandManager
 {
-	public class CommandManager : IGetCommandInput
+	public class CommandManager : IGetCommandInput , IInitialize
 	{
 		private List<string> _uiMessages;
 		public string[] GetCommandInput()
@@ -25,8 +25,9 @@ namespace AboutCommandManager
 
 		}
 
-		public void Initialize(string path)
+		public void Initialize(params object[] parameters)
 		{
+			string path = (string)parameters[0];
 			path = Path.Combine(path , "Assets\\UIMessages.xlsx");
 			using (excelFileLoadManager excelFileLoadManager = new excelFileLoadManager(path , 1))
 			{

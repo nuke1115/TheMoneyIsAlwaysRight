@@ -5,17 +5,27 @@ using AboutPlayer;
 
 namespace AboutInitializeManager
 {
-	public class InitializeManager
+	public static class InitializeManager
 	{
-		public void Initialize(ExecuteManager executeManager , CommandManager commandManager ,ITerminateProgram program )
+		public static void Initialize(out IExecuteLogics executeLogicsManager, out IGetCommandInput getCommandInputManager,ITerminateProgram program ,string path)
 		{
-			string path = AppDomain.CurrentDomain.BaseDirectory.Substring(0, AppDomain.CurrentDomain.BaseDirectory.LastIndexOf("\\TheMoneyIsAlwaysRight\\") + "\\TheMoneyIsAlwaysRight\\".Length);
+			ExecuteManager executeManager = new ExecuteManager();
+			CommandManager commandManager = new CommandManager();
+
 			string saveDataPath = Path.Combine(path, "Assets\\PlayerSaveFile.json");
 			jsonFileManager jsonFileManager = new jsonFileManager();
 			Player player = jsonFileManager.readJson(saveDataPath);
 
-			executeManager.InitializeWithInject(player , program, path);
-			commandManager.Initialize(path);
+			IPlayerTag playerTag = player;
+			IInitialize commandManagerInitialize = commandManager;
+			IInitialize executeManagerInitialize = executeManager;
+
+			executeManagerInitialize.Initialize(playerTag , program, path);
+			commandManagerInitialize.Initialize(path);
+
+			executeLogicsManager = executeManager;
+			getCommandInputManager = commandManager;
+
 		}
 	}
 }
