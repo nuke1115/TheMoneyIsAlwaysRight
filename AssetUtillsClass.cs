@@ -1,8 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using Excel = Microsoft.Office.Interop.Excel;
 using Newtonsoft.Json;
-using static System.Net.Mime.MediaTypeNames;
-using System.IO;
 using AboutPlayer;
 
 namespace AboutAssetUtills
@@ -11,7 +9,7 @@ namespace AboutAssetUtills
 	/// an excel loader class <br/>
 	/// reads excel file from path, and returns List(string) that contains excel data
 	/// </summary>
-	public class excelFileLoadManager : ILoadExcelFile, IDisposable
+	public class ExcelFileLoadManager : ILoadExcelFile, IDisposable
 	{
 
 		Excel.Application excelApp = new Excel.Application();
@@ -20,12 +18,12 @@ namespace AboutAssetUtills
 		private const int _defaultRowNumber = 1;
 
 
-		public excelFileLoadManager(string Path)
+		public ExcelFileLoadManager(string Path)
 		{
 			workbook = excelApp.Workbooks.Open(Path);
 		}
 
-		public excelFileLoadManager(string Path, int sheetNumber)
+		public ExcelFileLoadManager(string Path, int sheetNumber)
 		{
 			workbook = excelApp.Workbooks.Open(Path);
 			worksheet = workbook.Worksheets[sheetNumber];

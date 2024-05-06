@@ -1,5 +1,6 @@
 ﻿using AboutAssetUtills;
 using AboutPlayer;
+using AboutSaveManager;
 using MainProgram;
 using System.IO;
 using System.Numerics;
@@ -12,7 +13,8 @@ namespace AboutExecuteManager
 		private IPlayerTag _player; // to be changed to interface
 		private ITerminateProgram _terminateProgram;
 		private int _nowStage;
-
+		private string _path;
+		
 		public ExecuteManager()
 		{
 			
@@ -26,7 +28,7 @@ namespace AboutExecuteManager
 			_nowStage = _player.GetNowStage();
 
 			path = Path.Combine(path, "Assets\\CommandConditions.xlsx");
-			using (excelFileLoadManager excelFileLoader = new excelFileLoadManager(path, 1))
+			using (ExcelFileLoadManager excelFileLoader = new ExcelFileLoadManager(path, 1))
 			{
 				_commandConditions = excelFileLoader.LoadExcelFile(1);
 			}
@@ -38,13 +40,16 @@ namespace AboutExecuteManager
 			_player = (IPlayerTag)parameters[0];
 			_terminateProgram = (ITerminateProgram)parameters[1];
 			_nowStage = _player.GetNowStage();
-			string path = (string)parameters[2];
+			_path = (string)parameters[2];
 
-			path = Path.Combine(path, "Assets\\CommandConditions.xlsx");
-			using (excelFileLoadManager excelFileLoader = new excelFileLoadManager(path, 1))
+			string CommandConditionsPath = Path.Combine(_path, "Assets\\CommandConditions.xlsx");
+			using (ExcelFileLoadManager excelFileLoader = new ExcelFileLoadManager(CommandConditionsPath, 1))
 			{
 				_commandConditions = excelFileLoader.LoadExcelFile(1);
 			}
+
+
+
 		}
 
 
@@ -78,7 +83,12 @@ namespace AboutExecuteManager
 				isExecutedSuccessfully = false;
 			}
 
+
+			_player.SaveNowStage(_nowStage);
+
 			//stage change logics
+
+
 
 			return isExecutedSuccessfully;
 		}

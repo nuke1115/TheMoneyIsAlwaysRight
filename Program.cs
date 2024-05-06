@@ -3,6 +3,11 @@
 using AboutInitializeManager;
 using AboutExecuteManager;
 using AboutCommandManager;
+using AboutPlayer;
+using AboutSaveManager;
+using AboutAssetUtills;
+using AboutPrintManager;
+using System.IO;
 
 namespace MainProgram
 {
@@ -14,9 +19,12 @@ namespace MainProgram
 		private bool _isExecutedSuccessfully;
 		private IGetCommandInput _getCommandInput;
 		private IExecuteLogics _executeManager;
+		private IPlayerTag _player;
+		private string _path;
+		private List<string> _UIMessages;
+		
 
-
-		public static void Main()
+		public static void Main()	
 		{
 			Program program = new Program();
 			ITerminateProgram terminateProgram = program;
@@ -37,20 +45,23 @@ namespace MainProgram
 				{
 					continue;
 				}
-				PrintResult();
-				EndOfLoop();
+				
 			}
+			EndOfGame(_player , _path);
+
+
 
 		}
 
-		private void EndOfLoop(/*to be added*/)
+		private void EndOfLoop()
 		{
-			//save logics
+
 		}
 
-		private void PrintResult()
+		private void EndOfGame(IPlayerTag player , string path)
 		{
-			Console.WriteLine("실행결과");//test
+			SaveManager.SaveData(player, path);
+			PrintManager.PrintToConsole(_UIMessages , 3);
 		}
 
 		private bool ExecuteLogics(string[] commandArgs)
@@ -70,11 +81,17 @@ namespace MainProgram
 
 		private void Initialize(ITerminateProgram terminateProgram)
 		{
-			string path = AppDomain.CurrentDomain.BaseDirectory.Substring(0, AppDomain.CurrentDomain.BaseDirectory.LastIndexOf("\\TheMoneyIsAlwaysRight\\") + "\\TheMoneyIsAlwaysRight\\".Length);
-
-			InitializeManager.Initialize(out _executeManager ,out _getCommandInput ,terminateProgram , path);
-
 			
+			_path = AppDomain.CurrentDomain.BaseDirectory.Substring(0, AppDomain.CurrentDomain.BaseDirectory.LastIndexOf("\\TheMoneyIsAlwaysRight\\") + "\\TheMoneyIsAlwaysRight\\".Length);
+			InitializeManager.Initialize(out _executeManager ,out _getCommandInput ,out _player  ,terminateProgram , _path);
+
+			string UIMessagePath = Path.Combine(_path, "Assets\\UIMessages.xlsx");
+
+			using (ExcelFileLoadManager excelFileLoadManager = new ExcelFileLoadManager(UIMessagePath, 1))
+			{
+				_UIMessages = excelFileLoadManager.LoadExcelFile(1);
+			}
+
 		}
 
 

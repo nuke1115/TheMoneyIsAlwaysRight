@@ -32,3 +32,4 @@ public interface ILoadExcelFile
 	public Excel.Worksheet LoadExcelFile();
 	public List<string> LoadExcelFile(int columnNum);
 }
+//으아아아ㅡ아아아ㅡㅏ아ㅣ이ㅏ아어라ㅣ이라아르아른이ㅏ르이ㅏ러ㅢㅏ나ㅣ

@@ -4,7 +4,7 @@
 
 	public class Player : IPlayerTag
 	{
-		private int _nowStage;
+		public int _nowStage;
 
 		public int GetNowStage()
 		{
@@ -15,9 +15,6 @@
 		{
 			_nowStage = nowStage;
 		}
-
-		
-		//option logics
 
 
 		public Player()
