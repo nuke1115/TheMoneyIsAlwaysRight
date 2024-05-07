@@ -1,9 +1,6 @@
 ﻿
 
 using AboutInitializeManager;
-using AboutExecuteManager;
-using AboutCommandManager;
-using AboutPlayer;
 using AboutSaveManager;
 using AboutAssetUtills;
 using AboutPrintManager;
@@ -87,10 +84,10 @@ namespace MainProgram
 
 			string UIMessagePath = Path.Combine(_path, "Assets\\UIMessages.xlsx");
 
-			using (ExcelFileLoadManager excelFileLoadManager = new ExcelFileLoadManager(UIMessagePath, 1))
-			{
-				_UIMessages = excelFileLoadManager.LoadExcelFile(1);
-			}
+
+			ExcelFileLoadManager excelFileLoadManager = new ExcelFileLoadManager(UIMessagePath, 0);
+			_UIMessages = excelFileLoadManager.LoadExcelFile(0);
+
 
 		}
 
@@ -107,7 +104,8 @@ namespace MainProgram
 /*
  TODO: 
 initialize 메서드 관련 코드 전부 뜯어고치기
-static 붙은거 수정 가능한건 최대한 고치기
 di패턴 내 지식상에서 구현 가능한거로 최대한해보기
 싱글톤패턴 지우기
+
+무료 엑셀 라이브러리 찾기 fuckkkkkkkkkkkkkkkkkkkkkkk //후보: NPOI
  */

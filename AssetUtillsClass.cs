@@ -1,7 +1,8 @@
-﻿using System.Runtime.InteropServices;
-using Excel = Microsoft.Office.Interop.Excel;
+﻿
 using Newtonsoft.Json;
 using AboutPlayer;
+using NPOI.SS.UserModel;
+
 
 namespace AboutAssetUtills
 {
@@ -9,42 +10,24 @@ namespace AboutAssetUtills
 	/// an excel loader class <br/>
 	/// reads excel file from path, and returns List(string) that contains excel data
 	/// </summary>
-	public class ExcelFileLoadManager : ILoadExcelFile, IDisposable
+	public class ExcelFileLoadManager : ILoadExcelFile//TODO : change interop.excel to other free libraries
 	{
 
-		Excel.Application excelApp = new Excel.Application();
-		Excel.Workbook workbook;
-		Excel.Worksheet worksheet;
-		private const int _defaultRowNumber = 1;
-
-
-		public ExcelFileLoadManager(string Path)
-		{
-			workbook = excelApp.Workbooks.Open(Path);
-		}
+		private string _filePath;
+		private int _sheetNumber;
+		private const string _ENDOFFILE = "#EOF";
+		private const int _DEFAULTSHEETNUM = 0;
 
 		public ExcelFileLoadManager(string Path, int sheetNumber)
 		{
-			workbook = excelApp.Workbooks.Open(Path);
-			worksheet = workbook.Worksheets[sheetNumber];
-		}
-
-
-		public void SetWoksheet(int sheetNumber)
-		{
-			worksheet = workbook.Worksheets[sheetNumber];
+			_filePath = Path;
+			_sheetNumber = sheetNumber;
 		}
 
 
 
-		public Excel.Worksheet LoadExcelFile()
-		{
-			return worksheet;
-		}
 
-
-
-		public List<string> LoadExcelFile(int columnNum)
+		public List<string> LoadExcelFile(int columnNum) //in this case , columnNum equals cell number
 		{
 			List<string> loadedExcelFile = new List<string>();
 
@@ -59,102 +42,31 @@ namespace AboutAssetUtills
 		{
 			loadedExcelFile = new List<string>();
 
-			int rowNum = _defaultRowNumber;
-			int maxRowCount = worksheet.UsedRange.Rows.Count;
-			dynamic? loadedData;
-
-			for (; rowNum <= maxRowCount; rowNum++)
+			using (var workbook = WorkbookFactory.Create(_filePath))
 			{
-				loadedData = worksheet.Cells[rowNum, columnNum].Value2;
-				if (loadedData != null)
+
+				ISheet sheet = workbook.GetSheetAt(_sheetNumber);
+
+				foreach (IRow row in sheet)
 				{
-					string data = loadedData.ToString();
-					loadedExcelFile.Add(data);
+
+					var cell = row.GetCell(columnNum);
+
+					string cellData = cell == null ? "" : cell.ToString();
+					if (cellData == _ENDOFFILE)
+					{
+						break;
+					}
+					loadedExcelFile.Add(cellData);
 				}
-
 			}
-		}
 
 
-
-
-		#region dispose
-		//dispose resources 객체 해제
-
-
-
-		private bool _disposed = false;
-		[DllImport("user32.dll", SetLastError = true)]
-		static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
-
-		public void Dispose()
-		{
-			Dispose(true);
-
-			GC.SuppressFinalize(this); //GC가 이 객체를 이중으로 해제하지 않기위한것//맞나?
 
 		}
-
-		protected virtual void Dispose(bool disposing)
-		{
-
-			if (_disposed)
-			{
-				return;
-			}
-
-			if (disposing)
-			{
-				//dispose managed resource
-			}
-
-			//dispose unmanaged resource
-			uint processId = 0;
-			GetWindowThreadProcessId(new IntPtr(excelApp.Hwnd), out processId);
-
-			excelApp.DisplayAlerts = false;
-
-			workbook.Close();
-			excelApp.Quit();
-
-
-			if (worksheet != null)
-			{
-				Marshal.FinalReleaseComObject(worksheet);
-				worksheet = null;
-			}
-
-			if (workbook != null)
-			{
-				Marshal.FinalReleaseComObject(workbook);
-				workbook = null;
-			}
-
-			if (excelApp != null)
-			{
-				Marshal.FinalReleaseComObject(excelApp);
-				excelApp = null;
-			}
-
-			if (processId != 0)
-			{
-				System.Diagnostics.Process excelProcess = System.Diagnostics.Process.GetProcessById((int)processId);
-				excelProcess.CloseMainWindow();
-				excelProcess.Refresh();
-				excelProcess.Kill();
-			}
-
-
-			_disposed = true;
-		}
-
-
-
 
 
 		//idisposable 과 gc 더 알아보기
-
-		#endregion
 
 
 

@@ -29,10 +29,8 @@ namespace AboutCommandManager
 		{
 			string path = (string)parameters[0];
 			path = Path.Combine(path , "Assets\\UIMessages.xlsx");
-			using (ExcelFileLoadManager excelFileLoadManager = new ExcelFileLoadManager(path , 1))
-			{
-				_uiMessages = excelFileLoadManager.LoadExcelFile(1);
-			}
+			ExcelFileLoadManager excelFileLoadManager = new ExcelFileLoadManager(path,0);
+			_uiMessages = excelFileLoadManager.LoadExcelFile(0);
 		}
 
 	}

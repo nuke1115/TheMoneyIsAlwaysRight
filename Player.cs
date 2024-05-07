@@ -1,7 +1,6 @@
 ﻿namespace AboutPlayer
 {
 
-
 	public class Player : IPlayerTag
 	{
 		public int _nowStage;

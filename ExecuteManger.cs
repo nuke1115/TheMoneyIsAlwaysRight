@@ -1,9 +1,6 @@
 ﻿using AboutAssetUtills;
-using AboutPlayer;
-using AboutSaveManager;
-using MainProgram;
 using System.IO;
-using System.Numerics;
+
 
 namespace AboutExecuteManager
 {
@@ -28,10 +25,10 @@ namespace AboutExecuteManager
 			_nowStage = _player.GetNowStage();
 
 			path = Path.Combine(path, "Assets\\CommandConditions.xlsx");
-			using (ExcelFileLoadManager excelFileLoader = new ExcelFileLoadManager(path, 1))
-			{
-				_commandConditions = excelFileLoader.LoadExcelFile(1);
-			}
+
+			ExcelFileLoadManager excelFileLoadManager = new ExcelFileLoadManager(path, 0);
+			_commandConditions = excelFileLoadManager.LoadExcelFile(0);
+
 		}
 		
 
@@ -43,10 +40,8 @@ namespace AboutExecuteManager
 			_path = (string)parameters[2];
 
 			string CommandConditionsPath = Path.Combine(_path, "Assets\\CommandConditions.xlsx");
-			using (ExcelFileLoadManager excelFileLoader = new ExcelFileLoadManager(CommandConditionsPath, 1))
-			{
-				_commandConditions = excelFileLoader.LoadExcelFile(1);
-			}
+			ExcelFileLoadManager excelFileLoadManager = new ExcelFileLoadManager(CommandConditionsPath, 0);
+			_commandConditions = excelFileLoadManager.LoadExcelFile(0);
 
 
 
