@@ -50,10 +50,11 @@ namespace MainProgram
 
 		}
 
-		private void EndOfLoop()
+		private void PrintLastestMessage()
 		{
 
 		}
+
 
 		private void EndOfGame(IPlayerTag player , string path)
 		{
@@ -85,7 +86,7 @@ namespace MainProgram
 			string UIMessagePath = Path.Combine(_path, "Assets\\UIMessages.xlsx");
 
 
-			ExcelFileLoadManager excelFileLoadManager = new ExcelFileLoadManager(UIMessagePath, 0);
+			ILoadExcelFile excelFileLoadManager = new ExcelFileLoadManager(UIMessagePath, 0);
 			_UIMessages = excelFileLoadManager.LoadExcelFile(0);
 
 

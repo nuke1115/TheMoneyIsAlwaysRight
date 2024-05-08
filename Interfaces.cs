@@ -8,6 +8,7 @@ public interface IPlayerTag
 {
 	public int GetNowStage();
 	public void SaveNowStage(int nowStage);
+
 }
 
 public interface IInitialize
@@ -25,9 +26,15 @@ public interface IGetCommandInput
 	public string[] GetCommandInput();
 }
 
+
 public interface ILoadExcelFile
 {
 
 	public List<string> LoadExcelFile(int columnNum);
+}
+
+public interface IReset
+{
+	public void Reset();
 }
 //으아아아ㅡ아아아ㅡㅏ아ㅣ이ㅏ아어라ㅣ이라아르아른이ㅏ르이ㅏ러ㅢㅏ나ㅣ

@@ -1,5 +1,4 @@
 ﻿using AboutAssetUtills;
-using System.IO;
 
 
 namespace AboutExecuteManager
@@ -17,20 +16,6 @@ namespace AboutExecuteManager
 			
 		}
 
-		[Obsolete("Not use anymore",true)]
-		public void InitializeWithInject(IPlayerTag player , ITerminateProgram program, string path)
-		{
-			_terminateProgram = program;
-			_player = player;
-			_nowStage = _player.GetNowStage();
-
-			path = Path.Combine(path, "Assets\\CommandConditions.xlsx");
-
-			ExcelFileLoadManager excelFileLoadManager = new ExcelFileLoadManager(path, 0);
-			_commandConditions = excelFileLoadManager.LoadExcelFile(0);
-
-		}
-		
 
 		public void Initialize(params object[] parameters)
 		{
@@ -40,7 +25,7 @@ namespace AboutExecuteManager
 			_path = (string)parameters[2];
 
 			string CommandConditionsPath = Path.Combine(_path, "Assets\\CommandConditions.xlsx");
-			ExcelFileLoadManager excelFileLoadManager = new ExcelFileLoadManager(CommandConditionsPath, 0);
+			ILoadExcelFile excelFileLoadManager = new ExcelFileLoadManager(CommandConditionsPath, 0);
 			_commandConditions = excelFileLoadManager.LoadExcelFile(0);
 
 
@@ -58,21 +43,11 @@ namespace AboutExecuteManager
 			{
 				_terminateProgram.TerminateProgram();
 			}
-            else if (commands[0] == _commandConditions[1])
+            else if (commands[0] == _commandConditions[1] || commands[0] == _commandConditions[2] || commands[0] == _commandConditions[3])
             {
-				Console.WriteLine("this is test 1"); //test
+				Console.WriteLine("test");
 				_nowStage++;
             }
-			else if (commands[0] == _commandConditions[2])
-			{
-				Console.WriteLine("this is test 2"); //test
-				_nowStage++;
-			}
-			else if (commands[0] == _commandConditions[3])
-			{
-				Console.WriteLine("this is test 3"); //test
-				_nowStage++;
-			}//end of options
 			else
 			{
 				isExecutedSuccessfully = false;
@@ -90,11 +65,19 @@ namespace AboutExecuteManager
 
 		private void ReturnStageInstance(int nowStage)
 		{
+
 			if (CheckIsStageChanged(nowStage))
 			{
-				//return stage instance logics
+				if (nowStage == 1)
+				{
+
+				}
+
+
+
 				_player.SaveNowStage(nowStage);
 			}
+
 		}
 
 		private bool CheckIsStageChanged(int nowStage)

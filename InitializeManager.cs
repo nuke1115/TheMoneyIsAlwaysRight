@@ -12,21 +12,19 @@ namespace AboutInitializeManager
 			ExecuteManager executeManager = new ExecuteManager();
 			CommandManager commandManager = new CommandManager();
 
-
 			string saveDataPath = Path.Combine(path, "Assets\\PlayerSaveFile.json");
 			jsonFileManager jsonFileManager = new jsonFileManager();
 
 			Player player = jsonFileManager.readJson(saveDataPath);
-
+			
+			
 			IPlayerTag playerTag = player;
 			IInitialize commandManagerInitialize = commandManager;
 			IInitialize executeManagerInitialize = executeManager;
 
-			executeManagerInitialize.Initialize(playerTag , program, path);
+			executeManagerInitialize.Initialize(playerTag, program, path);
 			commandManagerInitialize.Initialize(path);
 
-
-			
 
 			executeLogicsManager = executeManager;
 			getCommandInputManager = commandManager;

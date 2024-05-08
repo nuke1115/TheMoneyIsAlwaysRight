@@ -5,6 +5,7 @@
 	{
 		public int _nowStage;
 
+
 		public int GetNowStage()
 		{
 			return _nowStage;
