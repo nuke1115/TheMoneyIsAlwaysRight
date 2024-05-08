@@ -43,7 +43,7 @@ namespace AboutExecuteManager
 			{
 				_terminateProgram.TerminateProgram();
 			}
-            else if (commands[0] == _commandConditions[1] || commands[0] == _commandConditions[2] || commands[0] == _commandConditions[3])
+            else if (commands[0] != _commandConditions[0] && _commandConditions.Contains(commands[0]))
             {
 				Console.WriteLine("test");
 				_nowStage++;
@@ -63,7 +63,7 @@ namespace AboutExecuteManager
 			return isExecutedSuccessfully;
 		}
 
-		private void ReturnStageInstance(int nowStage)
+		private void ReturnStageInstance(int nowStage)//to be changed
 		{
 
 			if (CheckIsStageChanged(nowStage))
