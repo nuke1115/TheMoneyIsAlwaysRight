@@ -2,6 +2,7 @@
 using AboutCommandManager;
 using AboutExecuteManager;
 using AboutPlayer;
+using AboutStageFactory;
 
 namespace AboutInitializeManager
 {
@@ -11,6 +12,7 @@ namespace AboutInitializeManager
 		{
 			ExecuteManager executeManager = new ExecuteManager();
 			CommandManager commandManager = new CommandManager();
+			StageFactory stageFactory = new StageFactory();
 
 			string saveDataPath = Path.Combine(path, "Assets\\PlayerSaveFile.json");
 			jsonFileManager jsonFileManager = new jsonFileManager();
@@ -21,10 +23,12 @@ namespace AboutInitializeManager
 			IPlayerTag playerTag = player;
 			IInitialize commandManagerInitialize = commandManager;
 			IInitialize executeManagerInitialize = executeManager;
+			IInitialize stageFactoryInitialize = stageFactory;
 
-			executeManagerInitialize.Initialize(playerTag, program, path);
+			
 			commandManagerInitialize.Initialize(path);
-
+			stageFactoryInitialize.Initialize(path);
+			executeManagerInitialize.Initialize(playerTag, program, path, stageFactory);
 
 			executeLogicsManager = executeManager;
 			getCommandInputManager = commandManager;

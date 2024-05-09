@@ -11,6 +11,16 @@ public interface IPlayerTag
 
 }
 
+public interface IGetInstance
+{
+	public IExecutableStage GetInstance(int nowStage);
+}
+
+public interface IExecutableStage
+{
+	public int ExecuteStageLogics(string selectedBranch , int nowStage , ref bool isExecutedSuccessfully);
+}
+
 public interface IInitialize
 {
 	public void Initialize(params object[] parameters);

@@ -1,4 +1,5 @@
 ﻿using AboutAssetUtills;
+using AboutStageFactory;
 
 
 namespace AboutExecuteManager
@@ -10,7 +11,9 @@ namespace AboutExecuteManager
 		private ITerminateProgram _terminateProgram;
 		private int _nowStage;
 		private string _path;
-		
+		private IGetInstance _stageFactory;
+		private IExecutableStage _stage;
+
 		public ExecuteManager()
 		{
 			
@@ -23,12 +26,13 @@ namespace AboutExecuteManager
 			_terminateProgram = (ITerminateProgram)parameters[1];
 			_nowStage = _player.GetNowStage();
 			_path = (string)parameters[2];
+			_stageFactory = (IGetInstance)parameters[3];
 
 			string CommandConditionsPath = Path.Combine(_path, "Assets\\CommandConditions.xlsx");
 			ILoadExcelFile excelFileLoadManager = new ExcelFileLoadManager(CommandConditionsPath, 0);
+
 			_commandConditions = excelFileLoadManager.LoadExcelFile(0);
-
-
+			_stage = _stageFactory.GetInstance(_nowStage);
 
 		}
 
@@ -45,44 +49,36 @@ namespace AboutExecuteManager
 			}
             else if (commands[0] != _commandConditions[0] && _commandConditions.Contains(commands[0]))
             {
-				Console.WriteLine("test");
-				_nowStage++;
+				_nowStage = _stage.ExecuteStageLogics(commands[0],_nowStage,ref isExecutedSuccessfully);
             }
 			else
 			{
 				isExecutedSuccessfully = false;
 			}
 
+			_stage = ReturnStageInstance(_nowStage , _stage);
 
 			_player.SaveNowStage(_nowStage);
-
-			//stage change logics
-
-
 
 			return isExecutedSuccessfully;
 		}
 
-		private void ReturnStageInstance(int nowStage)//to be changed
+		private IExecutableStage ReturnStageInstance(int nowStage , IExecutableStage input)//to be changed
 		{
-
+			IExecutableStage stage = input;
 			if (CheckIsStageChanged(nowStage))
 			{
-				if (nowStage == 1)
-				{
-
-				}
-
-
+				stage = _stageFactory.GetInstance(nowStage);
 
 				_player.SaveNowStage(nowStage);
 			}
 
+			return stage;
 		}
 
 		private bool CheckIsStageChanged(int nowStage)
 		{
-			return nowStage == _player.GetNowStage();
+			return nowStage != _player.GetNowStage();
 		}
 	}
 }
