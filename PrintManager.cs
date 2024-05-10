@@ -31,9 +31,23 @@ namespace AboutPrintManager
 				}
 				Console.WriteLine(tmp);
 			}
+		}
 
-			
+		public static void PrintToConsole(List<string> ThingsToPrint, int sectionNum, int branchNum)
+		{
+			string sos = $"#SOS{sectionNum}-{branchNum}";
+			string eos = $"#EOS{sectionNum}-{branchNum}";
+			int sosIndex = ThingsToPrint.FindIndex(item => item == sos);
 
+			for (int i = sosIndex + 1; ; i++)
+			{
+				string tmp = ThingsToPrint[i];
+				if (tmp == eos)
+				{
+					break;
+				}
+				Console.WriteLine(tmp);
+			}
 		}
 	}
 }
