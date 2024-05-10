@@ -15,9 +15,9 @@ namespace AboutInitializeManager
 			StageFactory stageFactory = new StageFactory();
 
 			string saveDataPath = Path.Combine(path, "Assets\\PlayerSaveFile.json");
-			jsonFileManager jsonFileManager = new jsonFileManager();
+			ILoadJsonFile jsonFileManager = new JsonFileManager();
 
-			Player player = jsonFileManager.readJson(saveDataPath);
+			Player player = jsonFileManager.LoadJsonFile(saveDataPath);
 			
 			
 			IPlayerTag playerTag = player;

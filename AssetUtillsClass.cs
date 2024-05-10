@@ -74,11 +74,11 @@ namespace AboutAssetUtills
 
 
 
-	public class jsonFileManager
+	public class JsonFileManager : ILoadJsonFile, ISaveJsonFile
 	{
 		//todo
 
-		public Player readJson(string path)
+		public Player LoadJsonFile(string path)
 		{
 			Player returnClass;
 			using (StreamReader file = File.OpenText(path))
@@ -89,7 +89,7 @@ namespace AboutAssetUtills
 			return returnClass;
 		}
 
-		public void WriteJson(string path , IPlayerTag player)
+		public void SaveJsonFile(string path , IPlayerTag player)
 		{
 			using (StreamWriter file = File.CreateText(path))
 			{

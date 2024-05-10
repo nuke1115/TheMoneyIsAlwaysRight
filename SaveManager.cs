@@ -7,9 +7,9 @@ namespace AboutSaveManager
 	{
 		public static void SaveData(IPlayerTag player , string path)
 		{
-			jsonFileManager jsonFileManager = new jsonFileManager();
+			ISaveJsonFile jsonFileManager = new JsonFileManager();
 			string saveDataPath = Path.Combine(path, "Assets\\PlayerSaveFile.json");
-			jsonFileManager.WriteJson(saveDataPath, player);
+			jsonFileManager.SaveJsonFile(saveDataPath, player);
 		}
 
 

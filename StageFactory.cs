@@ -17,7 +17,7 @@ namespace AboutStageFactory
 			#region excel_load
 			string storyPath = Path.Combine((string)parameters[0],"Assets\\Stories.xlsx");
 
-			ExcelFileLoadManager excelFileLoadManager = new ExcelFileLoadManager(storyPath , 0);
+			ILoadExcelFile excelFileLoadManager = new ExcelFileLoadManager(storyPath , 0);
 			_story = excelFileLoadManager.LoadExcelFile(0);
 
 			#endregion excel_load

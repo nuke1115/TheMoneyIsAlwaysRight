@@ -1,4 +1,6 @@
 ﻿
+using AboutPlayer;
+
 public interface ITerminateProgram
 {
 	public void TerminateProgram();
@@ -43,6 +45,16 @@ public interface ILoadExcelFile
 {
 
 	public List<string> LoadExcelFile(int columnNum);
+}
+
+public  interface ILoadJsonFile
+{
+	public Player LoadJsonFile(string path);
+}
+
+public interface ISaveJsonFile
+{
+	public void SaveJsonFile(string path, IPlayerTag player);
 }
 
 public interface IReset
