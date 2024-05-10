@@ -36,7 +36,10 @@ namespace AboutExecuteManager
 
 		}
 
-
+		public void ExecuteInitialLogic()
+		{
+			_stage.ExecuteInitialStageLogics(_nowStage);
+		}
 
 		public bool ExecuteLogics(string[] commands)
 		{
@@ -69,7 +72,6 @@ namespace AboutExecuteManager
 			if (CheckIsStageChanged(nowStage))
 			{
 				stage = _stageFactory.GetInstance(nowStage);
-
 				_player.SaveNowStage(nowStage);
 			}
 
@@ -80,5 +82,7 @@ namespace AboutExecuteManager
 		{
 			return nowStage != _player.GetNowStage();
 		}
+
+		
 	}
 }

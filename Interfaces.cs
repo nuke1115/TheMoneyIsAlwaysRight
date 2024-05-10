@@ -19,6 +19,7 @@ public interface IGetInstance
 public interface IExecutableStage
 {
 	public int ExecuteStageLogics(string selectedBranch , int nowStage , ref bool isExecutedSuccessfully);
+	public int ExecuteInitialStageLogics(int nowStage);
 }
 
 public interface IInitialize
@@ -29,6 +30,7 @@ public interface IInitialize
 public interface IExecuteLogics
 {
 	public bool ExecuteLogics(string[] commands);
+	public void ExecuteInitialLogic();
 }
 
 public interface IGetCommandInput

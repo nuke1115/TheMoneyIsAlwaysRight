@@ -24,9 +24,10 @@ namespace AboutStageFactory
 
 			_instances = new IExecutableStage[4];
 
-			_instances[0] = new Stage1(_story);
-			_instances[1] = new Stage2(_story); 
-			_instances[2] = null;//temporary test
+			_instances[0] = new Stage0(_story);
+			_instances[1] = new Stage1(_story);
+			_instances[2] = new Stage2(_story); 
+			_instances[3] = null;//temporary test
 		}
 		
 	}

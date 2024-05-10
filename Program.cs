@@ -33,6 +33,7 @@ namespace MainProgram
 		private void Start()//main loop
 		{
 			
+			ExecuteInitialLogic();
 
 			while (_running)
 			{
@@ -45,16 +46,12 @@ namespace MainProgram
 				
 			}
 			EndOfGame(_player , _path);
-
-
-
 		}
 
-		private void PrintLastestMessage()
+		private void ExecuteInitialLogic()
 		{
-
+			_executeManager.ExecuteInitialLogic();
 		}
-
 
 		private void EndOfGame(IPlayerTag player , string path)
 		{
