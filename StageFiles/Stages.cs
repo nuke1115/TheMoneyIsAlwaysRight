@@ -1,194 +1,114 @@
 ﻿
+using AboutPlayer;
 using AboutPrintManager;
 
 namespace AboutStages
 {
-	public abstract class BaseStage : IExecutableStage
-	{
-		List<string> _story;
-
-		public int ExecuteInitialStageLogics(int nowStage)
-		{
-			throw new NotImplementedException();
-		}
-
-		public abstract int ExecuteStageLogics(string selectedBranch , int nowStage, ref bool isExecutedSuccessfully);
-	}
+	
+	
 
 	public class Stage0 : IExecutableStage
 	{
-		List<string> _story;
 		private const int _NOW_STAGE_CODE = 0;
-		private const int _TO_NEXT = 1;
 
-		public Stage0(List<string> story)
+		public Stage0()//버튼 누르라고 알려주는 그런것
 		{
-			_story = story;
 		}
 
-		public int ExecuteInitialStageLogics(int nowStage)
+		public bool ExecuteStageLogics(string selectedBranch, ref int nowStage, ref int branchNumber , ref int stageCode)
 		{
-			PrintManager.PrintToConsole(_story, _NOW_STAGE_CODE, 0);
-
-			return nowStage;
 			
-		}
+			bool isExecutedSuccessfully = true;
+			stageCode = _NOW_STAGE_CODE;
 
-		public int ExecuteStageLogics(string selectedBranch, int nowStage, ref bool isExecutedSuccessfully)
-		{
-			if (selectedBranch == "1")
+			if (selectedBranch == "0")
 			{
-				nowStage = Branch1(nowStage);
+				nowStage += Branch0(ref branchNumber);
+			}
+			else if (selectedBranch == "1")
+			{
+				nowStage += Branch1(ref branchNumber);
 			}
 			else
 			{
-				isExecutedSuccessfully = false;
+				isExecutedSuccessfully = false;	
 			}
 
-			return nowStage;
-		}	
-
-		private int Branch1(int nowStage)
-		{
-			PrintManager.PrintToConsole(_story, _NOW_STAGE_CODE, 1);
-			return nowStage + _TO_NEXT;
+			return isExecutedSuccessfully;
 		}
+
+		private int Branch0(ref int branchNumber)
+		{
+			branchNumber = (int)StageMovementCode.BRANCH_0;
+			return (int)StageMovementCode.STAY_HERE;
+		}
+
+		private int Branch1(ref int branchNumber)
+		{
+			branchNumber = (int)StageMovementCode.BRANCH_1;
+			return (int)StageMovementCode.TO_NEXT;
+		}
+
 	}
 
 	public class Stage1 : IExecutableStage
 	{
-		List<string> _story;
-		private const int _TO_NEXT = 1;
-		private const int _NO_MOVE = 0;
-		private const int _RESET = -1;
 		private const int _NOW_STAGE_CODE = 1;
 
-		public Stage1(List<string> story)
+		public Stage1()
 		{
-			_story = story;
 		}
 
-		public int ExecuteInitialStageLogics(int nowStage)
+		public bool ExecuteStageLogics(string selectedBranch, ref int nowStage, ref int branchNumber, ref int stageCode)
 		{
 
-			PrintManager.PrintToConsole(_story, _NOW_STAGE_CODE - 1, 1);
-			return nowStage;
-		}
+			bool isExecutedSuccessfully = true;
+			stageCode = _NOW_STAGE_CODE;
 
-		public int ExecuteStageLogics(string selectedBranch, int nowStage, ref bool isExecutedSuccessfully)
-		{
-			
-			if (selectedBranch == "1")
-			{
-				nowStage = Branch1(nowStage);
-			}
-            else if (selectedBranch == "2")
-            {
-				nowStage = Branch2(nowStage);
-            }
-			else if (selectedBranch == "3")
-			{
-				nowStage = Branch3(nowStage);
-			}
-			else
-			{
-				isExecutedSuccessfully = false;
-			}
-
-			return nowStage;
-		}
-
-		private int Branch1(int nowStage)
-		{
-			PrintManager.PrintToConsole(_story , _NOW_STAGE_CODE , 1);
-			return nowStage + _TO_NEXT;
-		}
-
-		private int Branch2(int nowStage)
-		{
-			PrintManager.PrintToConsole(_story, _NOW_STAGE_CODE , 2);
-			return nowStage + (nowStage*_RESET) ;
-		}
-
-		private int Branch3(int nowStage)
-		{
-			PrintManager.PrintToConsole(_story, _NOW_STAGE_CODE , 3);
-			return nowStage + _NO_MOVE;
-		}
-	}
-
-	
-	public class Stage2 : IExecutableStage
-	{
-		List<string> _story;
-		private const int _TO_NEXT = 1;
-		private const int _TO_PREV = -1;
-		private const int _NO_MOVE = 0;
-		private const int _RESET = -1;
-		private const int _NOW_STAGE_CODE = 2;
-
-		public Stage2(List<string> story)
-		{
-			_story = story;
-		}
-
-		public int ExecuteInitialStageLogics(int nowStage)
-		{
-
-			PrintManager.PrintToConsole(_story, _NOW_STAGE_CODE - 1, 1);
-			return nowStage;
-		}
-
-		public int ExecuteStageLogics(string selectedBranch, int nowStage, ref bool isExecutedSuccessfully)
-		{
 
 			if (selectedBranch == "1")
 			{
-				nowStage = Branch1(nowStage);
+				nowStage += Branch1(ref branchNumber);
 			}
 			else if (selectedBranch == "2")
 			{
-				nowStage = Branch2(nowStage);
-			}
-			else if (selectedBranch == "3")
-			{
-				nowStage = Branch3(nowStage);
-			}
-			else if (selectedBranch == "4")
-			{
-				nowStage = Branch4(nowStage);
+				nowStage *= Branch2(ref branchNumber);
 			}
 			else
 			{
 				isExecutedSuccessfully = false;
 			}
 
-			return nowStage;
+			return isExecutedSuccessfully;
 		}
 
-		private int Branch1(int nowStage)
+
+		private int Branch1(ref int branchNumber)
 		{
-			PrintManager.PrintToConsole(_story, _NOW_STAGE_CODE, 1);
-			return nowStage + _TO_NEXT;
+			branchNumber = (int)StageMovementCode.BRANCH_1;
+			return (int)StageMovementCode.TO_NEXT;
 		}
 
-		private int Branch2(int nowStage)
+		private int Branch2(ref int branchNumber)
 		{
-			PrintManager.PrintToConsole(_story, _NOW_STAGE_CODE , 2);
-			return nowStage + (nowStage * _RESET);
+			branchNumber = (int)StageMovementCode.BRANCH_2;
+			return (int)StageMovementCode.SHOW_ME_THE_ENDING;
 		}
 
-		private int Branch3(int nowStage)
-		{
-			PrintManager.PrintToConsole(_story, _NOW_STAGE_CODE , 3);
-			return nowStage + _NO_MOVE;
-		}
+	}
 
-		private int Branch4(int nowStage)
-		{
-			PrintManager.PrintToConsole(_story, _NOW_STAGE_CODE , 4);
-			return nowStage + _TO_PREV;
-		}
+
+	enum StageMovementCode : int
+	{
+		TO_NEXT = 1,
+		STAY_HERE = 0,
+		TO_PREV = -1,
+		SHOW_ME_THE_ENDING = 0,
+		BRANCH_0 = 0,
+		BRANCH_1 = 1,
+		BRANCH_2 = 2,
+		BRANCH_3 = 3,
+		BRANCH_4 = 4
 	}
 
 }

@@ -36,6 +36,8 @@ namespace MainProgram
 
 		private void Start()//main loop
 		{
+			InitialMessage();
+
 			while (_running)
 			{
 				_commandArgs = GetCommandInput();
@@ -48,6 +50,14 @@ namespace MainProgram
 				
 			}
 			EndOfGame(_player , _path);
+		}
+
+		private void InitialMessage()
+		{
+			if (_player.GetNowStage() != 0)
+			{
+				PrintManager.PrintToConsole(_story, _player.GetNowStage() - 1, 1);
+			}
 		}
 
 		private void PrintResult()

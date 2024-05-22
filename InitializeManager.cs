@@ -35,5 +35,7 @@ namespace AboutInitializeManager
 			pPlayer = player;
 
 		}
+
+		
 	}
 }
