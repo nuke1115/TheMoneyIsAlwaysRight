@@ -10,6 +10,12 @@ public interface IPlayerTag
 {
 	public int GetNowStage();
 	public void SaveNowStage(int nowStage);
+	public bool GetBaguetteState();
+	public void SaveBaguetteState(bool baguetteState);
+	public bool GetReturnItemState();
+	public void SaveReturnItemState(bool returnItemState);
+	public bool GetCaveBranchState();
+	public void SaveCaveBranchState(bool CaveBranchState);
 
 }
 
@@ -20,8 +26,7 @@ public interface IGetInstance
 
 public interface IExecutableStage
 {
-	public int ExecuteStageLogics(string selectedBranch , int nowStage , ref bool isExecutedSuccessfully);
-	public int ExecuteInitialStageLogics(int nowStage);
+	public bool ExecuteStageLogics(string selectedBranch, ref int nowStage, ref int branchNumber, ref int stageCode);
 }
 
 public interface IInitialize
@@ -31,8 +36,7 @@ public interface IInitialize
 
 public interface IExecuteLogics
 {
-	public bool ExecuteLogics(string[] commands);
-	public void ExecuteInitialLogic();
+	public bool ExecuteLogics(string[] commands , ref int sectionNumber , ref int branchNumber);
 }
 
 public interface IGetCommandInput

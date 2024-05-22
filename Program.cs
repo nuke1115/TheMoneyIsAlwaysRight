@@ -19,6 +19,10 @@ namespace MainProgram
 		private IPlayerTag _player;
 		private string _path;
 		private List<string> _UIMessages;
+		private List<string> _story;
+		private int _sectionNumber;
+		private int _branchNumber;
+		private bool _isGameEnd = false;
 		
 
 		public static void Main()	
@@ -32,25 +36,23 @@ namespace MainProgram
 
 		private void Start()//main loop
 		{
-			
-			ExecuteInitialLogic();
-
 			while (_running)
 			{
 				_commandArgs = GetCommandInput();
 				_isExecutedSuccessfully = ExecuteLogics(_commandArgs);
-				if (!_isExecutedSuccessfully)
+				if (!_isExecutedSuccessfully || _isGameEnd)
 				{
 					continue;
 				}
+				PrintResult();
 				
 			}
 			EndOfGame(_player , _path);
 		}
 
-		private void ExecuteInitialLogic()
+		private void PrintResult()
 		{
-			_executeManager.ExecuteInitialLogic();
+			PrintManager.PrintToConsole(_story, _sectionNumber, _branchNumber);
 		}
 
 		private void EndOfGame(IPlayerTag player , string path)
@@ -61,7 +63,7 @@ namespace MainProgram
 
 		private bool ExecuteLogics(string[] commandArgs)
 		{
-			_isExecutedSuccessfully = _executeManager.ExecuteLogics(commandArgs);
+			_isExecutedSuccessfully = _executeManager.ExecuteLogics(commandArgs , ref _sectionNumber , ref _branchNumber);
 			return _isExecutedSuccessfully;
 		}
 
@@ -81,10 +83,12 @@ namespace MainProgram
 			InitializeManager.Initialize(out _executeManager ,out _getCommandInput ,out _player  ,terminateProgram , _path);
 
 			string UIMessagePath = Path.Combine(_path, "Assets\\UIMessages.xlsx");
-
+			string StoryPath = Path.Combine(_path, "Assets\\Stories.xlsx");
 
 			ILoadExcelFile excelFileLoadManager = new ExcelFileLoadManager(UIMessagePath, 0);
 			_UIMessages = excelFileLoadManager.LoadExcelFile(0);
+			excelFileLoadManager = new ExcelFileLoadManager(StoryPath, 0);
+			_story = excelFileLoadManager.LoadExcelFile(0);
 
 
 		}
@@ -93,6 +97,7 @@ namespace MainProgram
 		public void TerminateProgram()
 		{
 			_running = false;
+			_isGameEnd = true;
 		}
 
 

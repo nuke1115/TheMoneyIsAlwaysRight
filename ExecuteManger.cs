@@ -36,12 +36,8 @@ namespace AboutExecuteManager
 
 		}
 
-		public void ExecuteInitialLogic()
-		{
-			_stage.ExecuteInitialStageLogics(_nowStage);
-		}
 
-		public bool ExecuteLogics(string[] commands)
+		public bool ExecuteLogics(string[] commands , ref int sectionNumber , ref int branchNumber)
 		{
 			bool isExecutedSuccessfully = true;
 
@@ -52,7 +48,7 @@ namespace AboutExecuteManager
 			}
             else if (commands[0] != _commandConditions[0] && _commandConditions.Contains(commands[0]))
             {
-				_nowStage = _stage.ExecuteStageLogics(commands[0],_nowStage,ref isExecutedSuccessfully);
+				isExecutedSuccessfully = _stage.ExecuteStageLogics(commands[0], ref _nowStage , ref branchNumber , ref sectionNumber);
             }
 			else
 			{
@@ -60,7 +56,6 @@ namespace AboutExecuteManager
 			}
 
 			_stage = ReturnStageInstance(_nowStage , _stage);
-
 			_player.SaveNowStage(_nowStage);
 
 			return isExecutedSuccessfully;

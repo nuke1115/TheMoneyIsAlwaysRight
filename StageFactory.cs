@@ -5,8 +5,8 @@ namespace AboutStageFactory
 {
 	public class StageFactory : IGetInstance , IInitialize
 	{
-		private List<string> _story;
 		private IExecutableStage[] _instances;
+		private IPlayerTag _player;
 		public IExecutableStage GetInstance(int nowStage)
 		{
 			return _instances[nowStage];
@@ -14,20 +14,13 @@ namespace AboutStageFactory
 
 		public void Initialize(params object[] parameters)
 		{
-			#region excel_load
-			string storyPath = Path.Combine((string)parameters[0],"Assets\\Stories.xlsx");
 
-			ILoadExcelFile excelFileLoadManager = new ExcelFileLoadManager(storyPath , 0);
-			_story = excelFileLoadManager.LoadExcelFile(0);
-
-			#endregion excel_load
+			_player = (IPlayerTag)parameters[1];
 
 			_instances = new IExecutableStage[4];
 
-			_instances[0] = new Stage0(_story);
-			_instances[1] = new Stage1(_story);
-			_instances[2] = new Stage2(_story); 
-			_instances[3] = null;//temporary test
+			_instances[0] = new Stage0();
+			_instances[1] = new Stage1();
 		}
 		
 	}

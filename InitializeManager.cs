@@ -27,7 +27,7 @@ namespace AboutInitializeManager
 
 			
 			commandManagerInitialize.Initialize(path);
-			stageFactoryInitialize.Initialize(path);
+			stageFactoryInitialize.Initialize(path , playerTag);
 			executeManagerInitialize.Initialize(playerTag, program, path, stageFactory);
 
 			executeLogicsManager = executeManager;

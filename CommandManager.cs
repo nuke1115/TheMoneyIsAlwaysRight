@@ -9,17 +9,9 @@ namespace AboutCommandManager
 		public string[] GetCommandInput()
 		{
 
-			//print description method
-			//the ment will be loaded from excel file
 			PrintManager.PrintToConsole(_uiMessages, 2);
 
-			//PrintManager.PrintToConsole();
-			//TODO
-
 			string[] input = Console.ReadLine().Split(" ");
-
-
-
 
 			return input;
 
