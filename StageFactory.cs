@@ -19,11 +19,11 @@ namespace AboutStageFactory
 			_instances = new IExecutableStage[6];
 
 			_instances[0] = new Stage0();
-			_instances[1] = new Stage1();
+			_instances[1] = new Stage1(_player);
 			_instances[2] = new Stage2(_player);
 			_instances[3] = new Stage2_Sub(_player);
 			_instances[4] = new Stage3(_player);
-			_instances[5] = new Stage4();
+			_instances[5] = new Stage4(_player);
 		}
 		
 	}

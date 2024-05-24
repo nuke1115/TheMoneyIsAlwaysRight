@@ -1,4 +1,6 @@
 ﻿
+using AboutPlayer;
+
 namespace AboutStages
 {
 	public class Stage0 : IExecutableStage
@@ -48,9 +50,10 @@ namespace AboutStages
 	public class Stage1 : IExecutableStage
 	{
 		private const int _NOW_STAGE_CODE = 1;
-
-		public Stage1()
+		private IPlayerTag _player;
+		public Stage1(IPlayerTag player)
 		{
+			_player = player;
 		}
 
 		public bool ExecuteStageLogics(string selectedBranch, ref int nowStage, ref int branchNumber, ref int stageCode)
@@ -86,6 +89,7 @@ namespace AboutStages
 		private int Branch2(ref int branchNumber)
 		{
 			branchNumber = (int)StageMovementCode.BRANCH_2;
+			_player.ResetPlayer(); 
 			Console.Clear();
 			return (int)StageMovementCode.SHOW_ME_THE_ENDING;
 		}
@@ -141,7 +145,6 @@ namespace AboutStages
 
 		private int Branch2(ref int branchNumber)
 		{
-			_player.SaveCaveBranchState(true);
 			branchNumber = (int)StageMovementCode.BRANCH_2;
 			return (int)StageMovementCode.TO_SUB;
 		}
@@ -168,7 +171,7 @@ namespace AboutStages
 
 			bool isExecutedSuccessfully = true;
 			stageCode = _NOW_STAGE_CODE;
-
+			_player.SaveCaveBranchState(true);
 
 			if (selectedBranch == "1")
 			{
@@ -257,6 +260,7 @@ namespace AboutStages
 		private int Branch3(ref int branchNumber)
 		{
 			Console.Clear();
+			_player.ResetPlayer();
 			branchNumber = (int)StageMovementCode.BRANCH_3;
 			return (int)StageMovementCode.SHOW_ME_THE_ENDING;
 		}
@@ -266,8 +270,10 @@ namespace AboutStages
 	public class Stage4 : IExecutableStage
 	{
 		private const int _NOW_STAGE_CODE = 5;
-		public Stage4()
+		private IPlayerTag _player;
+		public Stage4(IPlayerTag player)
 		{
+			_player = player;
 		}
 
 		public bool ExecuteStageLogics(string selectedBranch, ref int nowStage, ref int branchNumber, ref int stageCode)
@@ -297,6 +303,7 @@ namespace AboutStages
 		private int Branch1(ref int branchNumber)
 		{
 			Console.Clear();
+			_player.ResetPlayer();
 			branchNumber = (int)StageMovementCode.BRANCH_1;
 			return (int)StageMovementCode.SHOW_ME_THE_ENDING;
 		}
@@ -314,6 +321,7 @@ namespace AboutStages
 				branchNumber = (int)StageMovementCode.BRANCH_3;
 			}
 			Console.Clear();
+			_player.ResetPlayer();
 			return (int)StageMovementCode.SHOW_ME_THE_ENDING;
 		}
 

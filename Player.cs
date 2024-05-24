@@ -5,7 +5,7 @@
 	{
 		public int _nowStage;
 		public bool _isBaguetteEnforced;
-		public bool _isReturnItemGained;
+		public bool _isReturnItemGained;//to be deleted
 		public bool _isCaveBranchSelected;
 
 		public void ResetPlayer()

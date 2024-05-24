@@ -5,6 +5,7 @@ using AboutSaveManager;
 using AboutAssetUtills;
 using AboutPrintManager;
 using System.IO;
+using AboutGetInitialStorySectionManager;
 
 namespace MainProgram
 {
@@ -54,9 +55,18 @@ namespace MainProgram
 
 		private void InitialMessage()
 		{
-			if (_player.GetNowStage() != 0)
+
+			int nowStage;
+			int branch;
+			bool isItStartPoint;
+			GetInitialStorySectionManager.GetInitialStorySection(_player, out branch, out nowStage , out isItStartPoint);
+			if (isItStartPoint)
 			{
-				PrintManager.PrintToConsole(_story, _player.GetNowStage() - 1, 1);
+				PrintManager.PrintToConsole(_UIMessages , 4);
+			}
+			else
+			{
+				PrintManager.PrintToConsole(_story,nowStage,branch);
 			}
 		}
 
