@@ -8,6 +8,14 @@
 		public bool _isReturnItemGained;
 		public bool _isCaveBranchSelected;
 
+		public void ResetPlayer()
+		{
+			_nowStage = 0;
+			_isBaguetteEnforced = false;
+			_isReturnItemGained = false;
+			_isCaveBranchSelected = false;
+		}
+
 		public bool GetCaveBranchState()
 		{
 			return _isCaveBranchSelected;

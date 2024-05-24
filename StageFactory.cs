@@ -1,5 +1,4 @@
-﻿using AboutAssetUtills;
-using AboutStages;
+﻿using AboutStages;
 
 namespace AboutStageFactory
 {
@@ -17,10 +16,14 @@ namespace AboutStageFactory
 
 			_player = (IPlayerTag)parameters[1];
 
-			_instances = new IExecutableStage[4];
+			_instances = new IExecutableStage[6];
 
 			_instances[0] = new Stage0();
 			_instances[1] = new Stage1();
+			_instances[2] = new Stage2(_player);
+			_instances[3] = new Stage2_Sub(_player);
+			_instances[4] = new Stage3(_player);
+			_instances[5] = new Stage4();
 		}
 		
 	}

@@ -41,6 +41,7 @@ namespace AboutExecuteManager
 		{
 			bool isExecutedSuccessfully = true;
 
+			_stage = _stageFactory.GetInstance(_nowStage);
 
 			if (commands[0] == _commandConditions[0])
 			{
@@ -55,27 +56,9 @@ namespace AboutExecuteManager
 				isExecutedSuccessfully = false;
 			}
 
-			_stage = ReturnStageInstance(_nowStage , _stage);
 			_player.SaveNowStage(_nowStage);
 
 			return isExecutedSuccessfully;
-		}
-
-		private IExecutableStage ReturnStageInstance(int nowStage , IExecutableStage input)//to be changed
-		{
-			IExecutableStage stage = input;
-			if (CheckIsStageChanged(nowStage))
-			{
-				stage = _stageFactory.GetInstance(nowStage);
-				_player.SaveNowStage(nowStage);
-			}
-
-			return stage;
-		}
-
-		private bool CheckIsStageChanged(int nowStage)
-		{
-			return nowStage != _player.GetNowStage();
 		}
 
 		

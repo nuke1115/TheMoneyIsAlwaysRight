@@ -16,6 +16,7 @@ public interface IPlayerTag
 	public void SaveReturnItemState(bool returnItemState);
 	public bool GetCaveBranchState();
 	public void SaveCaveBranchState(bool CaveBranchState);
+	public void ResetPlayer();
 
 }
 
